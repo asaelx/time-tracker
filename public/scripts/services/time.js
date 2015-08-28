@@ -7,7 +7,11 @@
 
     function time($resource){
 
-        var Time = $resource('data/time.json');
+        var Time = $resource('api/time/:id', {}, {
+            update: {
+                method: 'PUT'
+            }
+        });
 
         function getTime(){
             return Time.query().$promise.then(function(results){
