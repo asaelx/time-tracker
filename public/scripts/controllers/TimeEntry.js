@@ -61,19 +61,26 @@
                 return;
             }
 
-            vm.timeentries.push({
-                    "user_id":1,
-                    "user_firstname":"Ryan",
-                    "user_lastname":"Chenkie",
-                    "start_time":vm.clockIn,
-                    "end_time":vm.clockOut,
-                    "loggedTime": time.getTimeDiff(vm.clockIn, vm.clockOut),
-                    "comment":vm.comment
-                });
+            time.saveTime({
+                "user_id":vm.timeEntryUser.id,
+                "star_time":vm.clockIn,
+                "end_time":vm.clockOut,
+                "comment":vm.comment
+            }).then(function(success){
+                getTimeEntries();
+                console.log(success);
+            }, function(error){
+                console.log(error);
+            });
 
-        updateTotalTime(vm.timeentries);
+            getTimeEntries();
 
-        vm.comment = "";
+            vm.clockIn = moment();
+            vm.clockOut = moment();
+
+            vm.comment = "";
+
+            vm.timeEntryUser = "";
 
         }
 
